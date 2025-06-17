@@ -2,7 +2,7 @@ package com.example.laba_4
 
 import androidx.lifecycle.ViewModel
 
-const val TAG = "QuizViewModel"
+private const val TAG: String = "QuizViewModel"
 
 class QuizViewModel : ViewModel() {
 

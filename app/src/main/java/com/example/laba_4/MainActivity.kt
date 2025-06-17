@@ -1,6 +1,8 @@
 package com.example.laba_4
 
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -10,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+
+private const val TAG = "MainActivity"
+private  const val KEY_INDEX = "index"
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val currentIndex =  savedInstanceState?.getInt(KEY_INDEX) ?:0
+        quizViewModel.currentIndex = currentIndex
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -48,12 +55,19 @@ class MainActivity : AppCompatActivity() {
         updateQuestion()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d(TAG, "Saved instance")
+        outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+
+    }
+
     private fun updateQuestion(){
         val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
     }
 
-    fun checkAnswer(userAnswer: Boolean){
+    private fun checkAnswer(userAnswer: Boolean){
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if(userAnswer == correctAnswer){
             R.string.correct_toast
