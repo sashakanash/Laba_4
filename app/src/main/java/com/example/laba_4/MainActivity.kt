@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ private const val TAG = "MainActivity"
 private  const val KEY_INDEX = "index"
 private  const val ANSWER_INDEX = "answers"
 private const val BUTTON_STATE = "buttons"
+private const val EXTRA_ANSWER_SHOWN = 300
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cheatButton: Button
     private lateinit var questionTextView: TextView
     private val quizViewModel : quizViewModel by lazy { ViewModelProvider(this)[quizViewModel::class.java] }
+    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        val isCheat = it.resultCode
+        if (isCheat == EXTRA_ANSWER_SHOWN) {
+            quizViewModel.isCheat = true
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         cheatButton.setOnClickListener{
             val answerIsTrue = quizViewModel.currentQuestionAnswer
             val intent =  CheatActivity.newIntent(this@MainActivity, answerIsTrue)
-            startActivity(intent)
+            getResult.launch(intent)
         }
         updateQuestion()
         if (buttonState)
@@ -92,11 +100,12 @@ class MainActivity : AppCompatActivity() {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         var numberOfCorrectAnswers = quizViewModel.numberOfCorrectAnswers
         val messageResId: Int
-        if(userAnswer == correctAnswer){
-            messageResId = R.string.correct_toast
-            numberOfCorrectAnswers += 1
-        }else
+        Log.d(TAG, quizViewModel.isCheat.toString())
+        if(quizViewModel.isCheat)
         {
+            messageResId = R.string.judgment_toast
+
+        }else if (userAnswer == correctAnswer){
             messageResId = R.string.incorrect_toast
             numberOfCorrectAnswers += 0
         }

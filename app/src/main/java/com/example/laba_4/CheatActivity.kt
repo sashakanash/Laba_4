@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 private const val EXTRA_ANSWER_IS_TRUE = "com.example.geoquiz.answer_is_true"
+private const val EXTRA_ANSWER_SHOWN = 300
 
 class CheatActivity : AppCompatActivity() {
     private var answerIsTrue = false
@@ -29,6 +30,7 @@ class CheatActivity : AppCompatActivity() {
                 else -> R.string.false_button
             }
             answerTextView.setText(answerText)
+            setResult(EXTRA_ANSWER_SHOWN, intent)
         }
     }
     companion object {

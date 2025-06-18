@@ -19,6 +19,12 @@
         android:layout_height="wrap_content"
         android:padding="24dp"
         tools:text="Ответ"/>
+    <TextView
+        android:id="@+id/version_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        tools:text="Версия"/>
     <Button
         android:id="@+id/show_answer_button"
         android:layout_width="wrap_content"
