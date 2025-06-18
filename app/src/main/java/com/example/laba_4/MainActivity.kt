@@ -61,7 +61,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         cheatButton.setOnClickListener{
-
+            val answerIsTrue = quizViewModel.currentQuestionAnswer
+            val intent =  CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            startActivity(intent)
         }
         updateQuestion()
         if (buttonState)
@@ -116,4 +118,3 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 }
-
