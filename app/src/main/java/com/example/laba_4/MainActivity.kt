@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private  lateinit var nextButton: Button
+    private lateinit var cheatButton: Button
     private lateinit var questionTextView: TextView
-    private val quizViewModel : QuizViewModel by lazy { ViewModelProvider(this)[QuizViewModel::class.java] }
+    private val quizViewModel : quizViewModel by lazy { ViewModelProvider(this)[quizViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         trueButton = findViewById(R.id.true_button)
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
+        cheatButton = findViewById(R.id.cheat_button)
         questionTextView = findViewById(R.id.question_text_view)
 
         trueButton.setOnClickListener{_: View ->
@@ -56,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         nextButton.setOnClickListener {_: View ->
             quizViewModel.moveToNext()
             updateQuestion()
+        }
+
+        cheatButton.setOnClickListener{
+
         }
         updateQuestion()
         if (buttonState)
@@ -89,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             numberOfCorrectAnswers += 1
         }else
         {
-            messageResId = R.string.false_toast
+            messageResId = R.string.incorrect_toast
             numberOfCorrectAnswers += 0
         }
         quizViewModel.numberOfCorrectAnswers = numberOfCorrectAnswers
@@ -101,12 +107,13 @@ class MainActivity : AppCompatActivity() {
             endDialog()
         }
     }
-}
-private fun endDialog(){
-    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-    builder.setMessage("Количество правильных ответов = ${quizViewModel.numberOfCorrectAnswers} " )
-    builder.setTitle("Результат")
+    private fun endDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("Количество правильных ответов = ${quizViewModel.numberOfCorrectAnswers}")
+        builder.setTitle("Результат")
 
-    val dialog: AlertDialog = builder.create()
-    dialog.show()
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
 }
+

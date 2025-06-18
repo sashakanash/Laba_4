@@ -2,9 +2,9 @@ package com.example.laba_4
 
 import androidx.lifecycle.ViewModel
 
-private const val TAG: String = "QuizViewModel"
+private const val TAG: String = "quizViewModel"
 
-class QuizViewModel : ViewModel() {
+class quizViewModel : ViewModel() {
 
     var currentIndex = 0
     var numberOfCorrectAnswers: Int = 0
