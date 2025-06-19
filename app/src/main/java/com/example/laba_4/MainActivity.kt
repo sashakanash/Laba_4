@@ -1,5 +1,6 @@
 package com.example.laba_4
 
+import android.content.Intent
 import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private  lateinit var nextButton: Button
+    private lateinit var cheatButton: Button
     private lateinit var questionTextView: TextView
     private val quizViewModel : QuizViewModel by lazy { ViewModelProvider(this)[QuizViewModel::class.java] }
 
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         trueButton = findViewById(R.id.true_button)
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
+        cheatButton = findViewById(R.id.cheat_button)
         questionTextView = findViewById(R.id.question_text_view)
 
         trueButton.setOnClickListener{_: View ->
@@ -57,7 +60,13 @@ class MainActivity : AppCompatActivity() {
             quizViewModel.moveToNext()
             updateQuestion()
         }
+
+        cheatButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, CheatActivity::class.java)
+            startActivity(intent)
+        }
         updateQuestion()
+
         if (buttonState)
         {
             trueButton.visibility = View.INVISIBLE
