@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             numberOfCorrectAnswers += 1
         }else
         {
-            messageResId = R.string.false_toast
+            messageResId = R.string.incorrect_toast
             numberOfCorrectAnswers += 0
         }
         quizViewModel.numberOfCorrectAnswers = numberOfCorrectAnswers
@@ -101,12 +101,13 @@ class MainActivity : AppCompatActivity() {
             endDialog()
         }
     }
-}
-private fun endDialog(){
-    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-    builder.setMessage("Количество правильных ответов = ${quizViewModel.numberOfCorrectAnswers} " )
-    builder.setTitle("Результат")
+    private fun endDialog(){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("Количество правильных ответов = ${quizViewModel.numberOfCorrectAnswers} " )
+        builder.setTitle("Результат")
 
-    val dialog: AlertDialog = builder.create()
-    dialog.show()
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
 }
+
